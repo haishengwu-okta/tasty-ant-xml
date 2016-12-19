@@ -86,6 +86,7 @@ antXMLRunner = Tasty.TestReporter optionDescription runner
             let testCaseAttributes time = map (uncurry XML.Attr . first XML.unqual)
                   [ ("name", testName)
                   , ("time", showTime time)
+                  , ("classname", testName)
                   ]
 
                 mkSummary contents =
