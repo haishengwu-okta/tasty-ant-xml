@@ -75,7 +75,7 @@ antXMLRunner = Tasty.TestReporter optionDescription runner
         timeDigits = 3
         showTime time = showFFloat (Just timeDigits) time ""
 
-        runTest _ testName _ = Tasty.Traversal $ Functor.Compose $ do
+        runTest _ testName parentNames _ = Tasty.Traversal $ Functor.Compose $ do
           i <- State.get
 
           summary <- lift $ STM.atomically $ do
@@ -86,6 +86,7 @@ antXMLRunner = Tasty.TestReporter optionDescription runner
             let testCaseAttributes time = map (uncurry XML.Attr . first XML.unqual)
                   [ ("name", testName)
                   , ("time", showTime time)
+                  , ("classname", unwords parentNames)
                   ]
 
                 mkSummary contents =
